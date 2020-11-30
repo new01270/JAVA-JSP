@@ -1,0 +1,27 @@
+@co.syeon.vo :
+	BorderVO
+	DB와 교환할 객체생성.
+	
+@co.syeon.dao : 
+	BorderDAO (DAO class 에서 상속)
+	DB와 연결할 SQL문 지정
+
+@co.syeon.Common : 	
+	DAO super;
+	BorderCommand.java(servlet)-Interface;
+	
+@co.syeon.Command: 각 Command 상속 interface.
+	BorderList.java : 게시판.jsp 페이지를 부르는 command. -> return "jsp/border/borderList.jsp";	
+	DB에서 받은 blist
+	->setAttribute("list", blist); 
+	-> list에담아 borderList.jsp 페이지에서 items에 담는다. 
+	-> list.id 등으로 값을 빼내 쓴다.
+		
+@co.syeon.controller : 
+	BorderController.java;
+	선언: command들을 List에 담는다 
+	-> 호출: action(request, response) 
+	-> client에게 전달: dispatcher.forward(request, response); (값을 유지하기위해  dispatcher 사용)
+	
+index.jsp 
+	/BorderController.java 로 넘어가 찾은 페이지를 보여줌. -> 글쓰기 화면은 jsp로 바로 호출.
