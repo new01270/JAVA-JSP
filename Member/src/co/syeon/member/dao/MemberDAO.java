@@ -19,7 +19,7 @@ public class MemberDAO {
 
 	private Connection conn;
 	private PreparedStatement psmt;
-	private ResultSet rs;
+	private ResultSet rs = null;;
 
 	private final String member_all = "SELECT * FROM member ORDER BY memberid ASC";
 	private String member_one = "SELECT * FROM member WHERE memberid = ?";
@@ -27,6 +27,7 @@ public class MemberDAO {
 	// private final String member_edit = "SELECT * FROM member WHERE memberid=?";
 	private final String update = "UPDATE member SET memberauth=?, memberpoint=? WHERE memberid=?";
 	private final String insert = "INSERT INTO member(memberid, membername, password, memberauth) VALUES(?,?,?,'user')";
+	private final String duplication = "SELECT memberid FROM member WHERE memberid=?";
 
 	public MemberDAO() {
 		try {
@@ -35,6 +36,19 @@ public class MemberDAO {
 			System.out.println("DB연결 성공");
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("DB연결 실패");
+		}
+	}
+	
+	private void close() {
+		try {
+			if (rs != null)
+				rs.close();
+			if (psmt != null)
+				psmt.close();
+			if (conn != null)
+				conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -125,7 +139,7 @@ public class MemberDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 		return n;
 	}
 
@@ -148,20 +162,22 @@ public class MemberDAO {
 		return vo;
 	}
 
-	private void close() {
+	public int duplicationCheck(String id) {
 		try {
-			if (rs != null)
-				rs.close();
-			System.out.println("rs클로즈");
-			if (psmt != null)
-				psmt.close();
-			System.out.println("psmt클로즈");
-			if (conn != null)
-				conn.close();
-			System.out.println("conn클로즈");
+			psmt = conn.prepareStatement(duplication);
+			psmt.setString(1, id);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				return 0;	// 이미 존재하는 회원
+			} else {
+				return 1;	// 가입 가능한 회원 아이디
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return -1;
 	}
+
+	
 
 } // end of dao

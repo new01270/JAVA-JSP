@@ -22,7 +22,7 @@
 	</div><br>
 	<div align="center">
 		<table border="1" style="border-collapse: collapse">
-			<tr style="background: papayawhip;">
+			<tr>
 				<th width="150" height="50">아이디</th>
 				<th width="150">이름</th>
 				<th width="150">권한</th>

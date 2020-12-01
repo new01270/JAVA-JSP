@@ -5,9 +5,9 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>menu.jsp</title>
-	<link href="/Member/css/menu.css" rel="stylesheet">
+<meta charset="UTF-8">
+<title>menu.jsp</title>
+<link href="/Member/css/menu.css" rel="stylesheet">
 </head>
 
 <body>
@@ -18,17 +18,14 @@
 			<br>
 			<ul id="nav">
 				<li><a href="/Member/index.jsp">HOME</a> <!-- href="../../index.jsp" -->
-					<c:if test="${id eq null || auth eq null }">
-						<!-- id, auth 는 세션에 있는 값 -->
-				<li><a href="/Member/jsp/member/loginForm.jsp">로그인</a></li>
-				</c:if>
-				<li><a href="#">메인메뉴 1</a>
-					<ul>
-						<li><a href="#">1-1</a></li>
-						<li><a href="#">1-2</a></li>
-					</ul>
-				</li>
 				<li><a href="/Member/BorderList.do">자유게시판</a></li>
+				<c:if test="${id eq null || auth eq null }">
+					<!-- id, auth 는 세션에 있는 값 -->
+					<li><a href="/Member/jsp/member/loginForm.jsp">로그인</a></li>
+				</c:if>
+				<c:if test="${id ne null && auth ne null }">
+					<li><a href="#">마이페이지</a></li>
+				</c:if>
 				<c:if test="${id eq null || auth eq null }">
 					<li><a href="/Member/jsp/member/signUp.jsp">회원가입</a></li>
 				</c:if>
@@ -36,13 +33,11 @@
 					<li><a href="/Member/MemberList.do">관리자권한</a>
 						<ul>
 							<li><a href="/Member/MemberList.do">멤버관리</a></li>
-							<li><a href="#">3-2</a></li>
-							<li><a href="#">3-3</a></li>
-							<li><a href="#">3-4</a></li>
-							<li><a href="#">3-5</a></li>
-							<li><a href="#">3-6</a></li>
-						</ul>
-					</li>
+							<li><a href="/Member/NoticeList.do">공지사항관리</a></li>
+						</ul></li>
+				</c:if>
+				<c:if test="${id ne null || auth ne null}">
+					<li><a href="/Member/NoticeList.do">공지사항</a></li>
 				</c:if>
 				<c:if test="${id ne null && auth ne null}">
 					<li><a href="/Member/Logout.do">로그아웃</a></li>

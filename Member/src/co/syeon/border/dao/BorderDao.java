@@ -32,6 +32,7 @@ public class BorderDao extends DAO {
 	private final String hit_update = "UPDATE border SET borderhit = borderhit + 1 WHERE borderid = ?";
 	private final String update = "UPDATE border SET bordercontent=? WHERE borderid = ?";
 	private final String dalete = "DELETE FROM border WHERE borderid=?";
+	private final String duplication = "SELECT * FROM memberid WHERE memberid=?";
 
 	// 전체 데이터 가져오기.
 	public ArrayList<BorderVO> selectAll() {
