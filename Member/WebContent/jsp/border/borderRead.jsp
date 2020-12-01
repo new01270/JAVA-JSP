@@ -23,21 +23,21 @@
 
 <body>
 	<div align="center">
-		<div>
-			<h1>글 상세 보기</h1>
+		<div><br>
+			<h2>글 상세 보기</h2><br>
 		</div>
 		<div>
 			<table border="1" style="border-collapse: collapse">
 				<tr>
-					<th width="100" align="center">작성자</th>
-					<td width="100">${vo.borderWrite}</td>
+					<th width="150" height="30" align="center">작성자</th>
+					<td width="150">${vo.borderWrite}</td>
 					<th width="100" align="center">작성일자</th>
-					<td width="100">${vo.borderDate}</td>
+					<td width="200">${vo.borderDate}</td>
 					<th width="100" align="center">조회수</th>
 					<td width="100">${vo.borderHit}</td>
 				</tr>
 				<tr>
-					<th width="100" align="center">제목</th>
+					<th width="100" height="30" align="center">제목</th>
 					<td colspan="5">${vo.borderTitle}</td>
 				</tr>
 				<tr>

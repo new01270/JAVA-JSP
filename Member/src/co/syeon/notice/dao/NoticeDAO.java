@@ -23,7 +23,6 @@ public class NoticeDAO {
 		try {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, user, password);
-			System.out.println("DB연결 성공");
 		} catch (ClassNotFoundException | SQLException e) {
 			System.out.println("DB연결 실패");
 		}
@@ -45,7 +44,9 @@ public class NoticeDAO {
 	// todo
 	private final String noticelist = "SELECT * FROM notice ORDER BY noticeid desc";
 	private final String noticeinsert = "INSERT INTO notice(noticeid, noticewriter, noticetitle, noticecontent, noticeattach) VALUES(no_val.nextval, ?, ?, ?, ?)";
-
+	private final String noticeselect = "SELECT * FROM notice WHERE noticeid=?";
+	private final String hit_update = "UPDATE notice SET noticehit = noticehit + 1 WHERE noticeid = ?";
+	
 	public ArrayList<NoticeVO> selectAll() {
 		ArrayList<NoticeVO> list = new ArrayList<>();
 		NoticeVO vo = new NoticeVO();
@@ -60,7 +61,7 @@ public class NoticeDAO {
 				vo.setNoticewriter(rs.getString("noticewriter"));
 				vo.setNoticehit(rs.getInt("noticehit"));
 				vo.setNoticeattach(rs.getString("noticeattach"));
-//				vo.setNoticecontent(rs.getString("noticecontent"));
+				vo.setNoticecontent(rs.getString("noticecontent"));
 				list.add(vo);
 
 			}
@@ -74,6 +75,50 @@ public class NoticeDAO {
 	}
 
 	public NoticeVO select(NoticeVO vo) {
+		try {
+			psmt = conn.prepareStatement(noticeselect);
+			psmt.setInt(1, vo.getNoticeid());
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				psmt = conn.prepareStatement(hit_update);
+				psmt.setInt(1, vo.getNoticeid());
+				psmt.executeUpdate();
+				
+				vo.setNoticeid(rs.getInt("noticeid"));
+				vo.setNoticewriter(rs.getString("noticewriter"));
+				vo.setNoticetitle(rs.getString("noticetitle"));
+				vo.setNoticecontent(rs.getString("noticecontent"));
+				vo.setNoticehit(rs.getInt("noticehit"));
+				vo.setNoticeattach(rs.getString("noticeattach"));
+				vo.setNoticedate(rs.getDate("noticedate"));				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return vo;
+	}
+	
+	public NoticeVO editBefore(NoticeVO vo) {
+		try {
+			psmt = conn.prepareStatement(noticeselect);
+			psmt.setInt(1, vo.getNoticeid());
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				psmt = conn.prepareStatement(hit_update);
+				psmt.setInt(1, vo.getNoticeid());
+				psmt.executeUpdate();
+				
+				vo.setNoticeid(rs.getInt("noticeid"));
+				vo.setNoticewriter(rs.getString("noticewriter"));
+				vo.setNoticetitle(rs.getString("noticetitle"));
+				vo.setNoticecontent(rs.getString("noticecontent"));
+				vo.setNoticehit(rs.getInt("noticehit"));
+				vo.setNoticeattach(rs.getString("noticeattach"));
+				vo.setNoticedate(rs.getDate("noticedate"));				
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return vo;
 	}
 

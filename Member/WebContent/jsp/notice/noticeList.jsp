@@ -8,12 +8,17 @@
 <head>
     <meta charset="UTF-8">
     <title>noticeList.jsp</title>
+    <style>
+		tr.row:hover {
+			background: pink;
+		}
+	</style>
 </head>
 
 <body>
     <div align="center">
         <div><br>
-            <h2>공지사항 목록</h2>
+            <h2>공지사항 목록</h2><br><bl>
         </div>
         <div align="center">
             <table border="1" style="border-collapse: collapse">
@@ -26,7 +31,7 @@
                     <th width="150" height="40">첨부파일</th>
                 </tr>
                 <c:forEach var="vo" items="${list}">
-                    <tr>
+                    <tr class="row" onclick="location.href='/Member/NoticeRead.do?id=${vo.noticeid}'">
                         <td height="30">${vo.noticeid}</td>
                         <td height="30">${vo.noticetitle}</td>
                         <td height="30">${vo.noticedate}</td>
