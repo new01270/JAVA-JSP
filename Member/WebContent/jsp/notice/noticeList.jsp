@@ -9,16 +9,17 @@
     <meta charset="UTF-8">
     <title>noticeList.jsp</title>
     <style>
-		tr.row:hover {
-			background: pink;
-		}
-	</style>
+        tr.row:hover {
+            background: pink;
+        }
+    </style>
 </head>
 
 <body>
     <div align="center">
         <div><br>
-            <h2>공지사항 목록</h2><br><bl>
+            <h2>공지사항 목록</h2><br>
+            <bl>
         </div>
         <div align="center">
             <table border="1" style="border-collapse: collapse">
@@ -32,11 +33,11 @@
                 </tr>
                 <c:forEach var="vo" items="${list}">
                     <tr class="row" onclick="location.href='/Member/NoticeRead.do?id=${vo.noticeid}'">
-                        <td height="30">${vo.noticeid}</td>
-                        <td height="30">${vo.noticetitle}</td>
-                        <td height="30">${vo.noticedate}</td>
-                        <td height="30">${vo.noticewriter}</td>
-                        <td height="30">${vo.noticehit}</td>
+                        <td height="30" align='center'>${vo.noticeid}</td>
+                        <td height="30" align='center'>${vo.noticetitle}</td>
+                        <td height="30" align='center'>${vo.noticedate}</td>
+                        <td height="30" align='center'>${vo.noticewriter}</td>
+                        <td height="30" align='center'>${vo.noticehit}</td>
                         <c:if test="${vo.noticeattach ne null }">
                             <td align="center">😍</td>
                         </c:if>

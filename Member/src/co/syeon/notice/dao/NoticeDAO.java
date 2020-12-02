@@ -46,7 +46,9 @@ public class NoticeDAO {
 	private final String noticeinsert = "INSERT INTO notice(noticeid, noticewriter, noticetitle, noticecontent, noticeattach) VALUES(no_val.nextval, ?, ?, ?, ?)";
 	private final String noticeselect = "SELECT * FROM notice WHERE noticeid=?";
 	private final String hit_update = "UPDATE notice SET noticehit = noticehit + 1 WHERE noticeid = ?";
-	
+	private final String update = "UPDATE notice SET noticecontent=?, noticeattach=? WHERE noticeid=?";
+	private final String delete = "DELETE FROM notice WHERE noticeid=?";
+
 	public ArrayList<NoticeVO> selectAll() {
 		ArrayList<NoticeVO> list = new ArrayList<>();
 		NoticeVO vo = new NoticeVO();
@@ -83,21 +85,21 @@ public class NoticeDAO {
 				psmt = conn.prepareStatement(hit_update);
 				psmt.setInt(1, vo.getNoticeid());
 				psmt.executeUpdate();
-				
+
 				vo.setNoticeid(rs.getInt("noticeid"));
 				vo.setNoticewriter(rs.getString("noticewriter"));
 				vo.setNoticetitle(rs.getString("noticetitle"));
 				vo.setNoticecontent(rs.getString("noticecontent"));
 				vo.setNoticehit(rs.getInt("noticehit"));
 				vo.setNoticeattach(rs.getString("noticeattach"));
-				vo.setNoticedate(rs.getDate("noticedate"));				
+				vo.setNoticedate(rs.getDate("noticedate"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return vo;
 	}
-	
+
 	public NoticeVO editBefore(NoticeVO vo) {
 		try {
 			psmt = conn.prepareStatement(noticeselect);
@@ -107,14 +109,14 @@ public class NoticeDAO {
 				psmt = conn.prepareStatement(hit_update);
 				psmt.setInt(1, vo.getNoticeid());
 				psmt.executeUpdate();
-				
+
 				vo.setNoticeid(rs.getInt("noticeid"));
 				vo.setNoticewriter(rs.getString("noticewriter"));
 				vo.setNoticetitle(rs.getString("noticetitle"));
 				vo.setNoticecontent(rs.getString("noticecontent"));
 				vo.setNoticehit(rs.getInt("noticehit"));
 				vo.setNoticeattach(rs.getString("noticeattach"));
-				vo.setNoticedate(rs.getDate("noticedate"));				
+				vo.setNoticedate(rs.getDate("noticedate"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -140,11 +142,30 @@ public class NoticeDAO {
 
 	public int update(NoticeVO vo) {
 		int n = 0;
+		try {
+			psmt = conn.prepareStatement(update);
+			psmt.setString(1, vo.getNoticecontent());
+			psmt.setString(2, vo.getNoticeattach());
+			psmt.setInt(3, vo.getNoticeid());
+			n = psmt.executeUpdate();
+			System.out.println(n + "건이 수정되었습니다.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return n;
 	}
 
 	public int delete(NoticeVO vo) {
 		int n = 0;
+		try {
+			psmt = conn.prepareStatement(delete);
+			psmt.setInt(1, vo.getNoticeid());
+			n = psmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
 		return n;
 	}
 

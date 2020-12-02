@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                     <th width="100" height="30" align="center">첨부파일</th>
-                    <td colspan="3" width="300">&nbsp;${vo.noticeattach }</td>
+                    <td colspan="3" width="300">&nbsp;파일명 :<a href="NoticeFileDown.do?fileName=${vo.noticeattach }">${vo.noticeattach }</a></td>
                 </tr>
             </table><br>
             <div>
