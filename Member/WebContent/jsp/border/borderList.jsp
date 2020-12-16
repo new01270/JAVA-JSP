@@ -37,7 +37,18 @@
 			</c:forEach>
 		</table>
 		<br />
-		<button type="button" onclick="location.href='jsp/border/borderInput.jsp'">글쓰기</button>
+		<button type="button" onclick="location.href='jsp/border/borderInput.jsp'">글쓰기</button><br><br>
+		<div align="center">
+			<form>
+				<select>
+					<option value="0">제목</option>
+					<option value="1">작성자</option>
+					<option value="2">작성일</option>
+				</select>				
+				<input type="text" size="20" id="condition" name="condition">&nbsp;
+				<input type="submit" value="검색">
+			</form>
+		</div>
 	</div>
 </body>
 
