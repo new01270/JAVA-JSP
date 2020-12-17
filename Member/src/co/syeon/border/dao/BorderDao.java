@@ -33,7 +33,7 @@ public class BorderDao extends DAO {
 	private final String hit_update = "UPDATE border SET borderhit = borderhit + 1 WHERE borderid = ?";
 	private final String update = "UPDATE border SET bordercontent=? WHERE borderid = ?";
 	private final String dalete = "DELETE FROM border WHERE borderid=?";
-	
+//	private final String searchOpt = "SELECT * FROM border WHERE ? LIKE ? ORDER BY BORDERID DESC";
 
 	// 전체 데이터 가져오기.
 	public ArrayList<BorderVO> selectAll() {
@@ -162,33 +162,62 @@ public class BorderDao extends DAO {
 		return n;
 	}
 
+	// 검색기능
+	// select * from border where ? like ?;
+	// select * from border where bordertitle like'%404%';
+	private final String searchOpt = "SELECT * FROM border WHERE bordertitle LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt2 = "SELECT * FROM border WHERE borderwriter LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt3 = "SELECT * FROM border WHERE bordercontent LIKE ? ORDER BY BORDERID DESC";
+
+	public ArrayList<BorderVO> getBoardList(HashMap<String, Object> search) {
+		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
+
+		String opt = (String) search.get("opt"); // 검색옵션(제목,작성자,작성일 등)
+		String condition = (String) search.get("condition"); // 검색내용
+
+		try {
+			if (opt.equals("bordertitle")) {
+				psmt = conn.prepareStatement(searchOpt);
+				psmt.setString(1, "%" + condition + "%");
+			} else if (opt.equals("borderwriter")) {
+				psmt = conn.prepareStatement(searchOpt2);
+				psmt.setString(1, "%" + condition + "%");
+			} else {
+				psmt = conn.prepareStatement(searchOpt3);
+				psmt.setString(1, "%" + condition + "%");
+			}
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				BorderVO vo = new BorderVO(); // borderVO값 초기화.
+				vo.setBorderId(rs.getInt("borderid"));
+				vo.setBorderWrite(rs.getString("borderwriter"));
+				vo.setBorderTitle(rs.getString("bordertitle"));
+				vo.setBorderContent(rs.getString("bordercontent"));
+				vo.setBorderDate(rs.getDate("borderdate"));
+				vo.setBorderHit(rs.getInt("borderhit"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
 	// close() 메서드 총괄.
 	private void close() {
 		try {
 			if (rs != null) {
 				rs.close();
-				System.out.println("rs클로즈");
 			}
 			if (psmt != null) {
 				psmt.close();
-				System.out.println("psmt클로즈");
 			}
 			if (conn != null) {
 				conn.close();
-				System.out.println("conn클로즈");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	// 글목록 갯수
-	public ArrayList<BorderVO> getBoardList(HashMap<String, Object> listOpt) {
-		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
-		
-		String opt = (String)listOpt.get("opt");	// 검색옵션(제목,내용,글쓴이 등)
-		String condition = (String)listOpt.get("condition");	// 검색내용
-		int start = (Integer)listOpt.get("start");	// 현재 페이지 번호
-		return null;
 	}
 }
