@@ -6,7 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import co.syeon.border.vo.BorderVO;
 import co.syeon.notice.vo.NoticeVO;
 
 public class NoticeDAO {
@@ -48,6 +50,8 @@ public class NoticeDAO {
 	private final String hit_update = "UPDATE notice SET noticehit = noticehit + 1 WHERE noticeid = ?";
 	private final String update = "UPDATE notice SET noticecontent=?, noticeattach=? WHERE noticeid=?";
 	private final String delete = "DELETE FROM notice WHERE noticeid=?";
+	private final String searchOpt = "SELECT * FROM notice WHERE noticetitle LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt2 = "SELECT * FROM notice WHERE noticecontent LIKE ? ORDER BY BORDERID DESC";
 
 	public ArrayList<NoticeVO> selectAll() {
 		ArrayList<NoticeVO> list = new ArrayList<>();
@@ -167,6 +171,41 @@ public class NoticeDAO {
 		}
 
 		return n;
+	}
+
+	// 검색기능
+	// select * from border where bordertitle like'%404%';
+	public ArrayList<NoticeVO> getBoardList(HashMap<String, Object> search) {
+		ArrayList<NoticeVO> list = new ArrayList<NoticeVO>();
+
+		String opt = (String) search.get("opt"); // 검색옵션(제목,작성자,작성일 등)
+		String condition = (String) search.get("condition"); // 검색내용
+
+		try {
+			if (opt.equals("noticetitle")) {
+				psmt = conn.prepareStatement(searchOpt);
+				psmt.setString(1, "%" + condition + "%");
+			} else {
+				psmt = conn.prepareStatement(searchOpt2);
+				psmt.setString(1, "%" + condition + "%");
+			}
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				NoticeVO vo = new NoticeVO();
+				vo.setNoticeid(rs.getInt("noticeid"));
+				vo.setNoticetitle(rs.getString("noticetitle"));
+				vo.setNoticedate(rs.getDate("noticedate"));
+				vo.setNoticewriter(rs.getString("noticewriter"));
+				vo.setNoticehit(rs.getInt("noticehit"));
+				vo.setNoticeattach(rs.getString("noticeattach"));
+				vo.setNoticecontent(rs.getString("noticecontent"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 
 }

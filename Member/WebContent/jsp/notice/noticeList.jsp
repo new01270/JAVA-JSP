@@ -61,11 +61,10 @@ tr.row:hover {
 				</form>
 			</div>
 			<div align="center">
-				<form>
-					<select>
-						<option value="0">제목</option>
-						<option value="1">작성자</option>
-						<option value="2">작성일</option>
+				<form id="frm" name="frm" action="NoticeKeyword.do" method="get">
+					<select id="opt" name="opt">
+						<option value="noticetitle">제목</option>
+						<option value="noticecontent">내용</option>
 					</select> <input type="text" size="20" id="condition" name="condition">&nbsp;
 					<input type="submit" value="검색">
 				</form>

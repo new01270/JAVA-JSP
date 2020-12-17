@@ -33,7 +33,9 @@ public class BorderDao extends DAO {
 	private final String hit_update = "UPDATE border SET borderhit = borderhit + 1 WHERE borderid = ?";
 	private final String update = "UPDATE border SET bordercontent=? WHERE borderid = ?";
 	private final String dalete = "DELETE FROM border WHERE borderid=?";
-//	private final String searchOpt = "SELECT * FROM border WHERE ? LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt = "SELECT * FROM border WHERE bordertitle LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt2 = "SELECT * FROM border WHERE borderwriter LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt3 = "SELECT * FROM border WHERE bordercontent LIKE ? ORDER BY BORDERID DESC";
 
 	// 전체 데이터 가져오기.
 	public ArrayList<BorderVO> selectAll() {
@@ -163,12 +165,7 @@ public class BorderDao extends DAO {
 	}
 
 	// 검색기능
-	// select * from border where ? like ?;
 	// select * from border where bordertitle like'%404%';
-	private final String searchOpt = "SELECT * FROM border WHERE bordertitle LIKE ? ORDER BY BORDERID DESC";
-	private final String searchOpt2 = "SELECT * FROM border WHERE borderwriter LIKE ? ORDER BY BORDERID DESC";
-	private final String searchOpt3 = "SELECT * FROM border WHERE bordercontent LIKE ? ORDER BY BORDERID DESC";
-
 	public ArrayList<BorderVO> getBoardList(HashMap<String, Object> search) {
 		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
 
