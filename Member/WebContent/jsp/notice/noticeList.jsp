@@ -55,8 +55,7 @@ tr.row:hover {
 				<form action="#" id="frm" name="frm" method="POST">
 					<input type="hidden" id="no" name="no">
 					<c:if test="${auth eq 'admin'}">
-						<button type="button"
-							onclick="location.href='jsp/notice/noticeForm.jsp'">글쓰기</button><br><br>
+						<button type="button" onclick="location.href='jsp/notice/noticeForm.jsp'">글쓰기</button><br><br>
 					</c:if>
 				</form>
 			</div>
@@ -65,7 +64,8 @@ tr.row:hover {
 					<select id="opt" name="opt">
 						<option value="noticetitle">제목</option>
 						<option value="noticecontent">내용</option>
-					</select> <input type="text" size="20" id="condition" name="condition">&nbsp;
+					</select>
+					<input type="text" size="30" id="condition" name="condition" placeholder="특수문자는 사용할수 없습니다.">&nbsp;
 					<input type="submit" value="검색">
 				</form>
 			</div>

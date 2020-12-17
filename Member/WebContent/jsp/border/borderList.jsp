@@ -50,7 +50,7 @@ tr.row:hover {
 					<option value="bordertitle">제목</option>
 					<option value="borderwriter">작성자</option>
 					<option value=bordercontent>내용</option>
-				</select> <input type="text" size="20" id="condition" name="condition">&nbsp;
+				</select> <input type="text" size="30" id="condition" name="condition" placeholder="특수문자는 사용할수 없습니다.">&nbsp;
 				<input type="submit" value="검색">
 			</form>
 		</div>

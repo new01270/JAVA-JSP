@@ -24,6 +24,7 @@ public class NoticeKeywordController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		String opt = request.getParameter("opt");
 		String condition = request.getParameter("condition");
 
@@ -35,7 +36,7 @@ public class NoticeKeywordController extends HttpServlet {
 		ArrayList<NoticeVO> slist = dao.getBoardList(search);
 		request.setAttribute("list", slist);
 
-		String viewPage = "jsp/border/noticeList.jsp";
+		String viewPage = "jsp/notice/noticeList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
 

@@ -50,8 +50,8 @@ public class NoticeDAO {
 	private final String hit_update = "UPDATE notice SET noticehit = noticehit + 1 WHERE noticeid = ?";
 	private final String update = "UPDATE notice SET noticecontent=?, noticeattach=? WHERE noticeid=?";
 	private final String delete = "DELETE FROM notice WHERE noticeid=?";
-	private final String searchOpt = "SELECT * FROM notice WHERE noticetitle LIKE ? ORDER BY BORDERID DESC";
-	private final String searchOpt2 = "SELECT * FROM notice WHERE noticecontent LIKE ? ORDER BY BORDERID DESC";
+	private final String searchOpt = "SELECT * FROM notice WHERE noticetitle LIKE ? ORDER BY noticeid DESC";
+	private final String searchOpt2 = "SELECT * FROM notice WHERE noticecontent LIKE ? ORDER BY noticeid DESC";
 
 	public ArrayList<NoticeVO> selectAll() {
 		ArrayList<NoticeVO> list = new ArrayList<>();
