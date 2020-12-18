@@ -36,6 +36,7 @@ public class BorderDao extends DAO {
 	private final String searchOpt = "SELECT * FROM border WHERE bordertitle LIKE ? ORDER BY BORDERID DESC";
 	private final String searchOpt2 = "SELECT * FROM border WHERE borderwriter LIKE ? ORDER BY BORDERID DESC";
 	private final String searchOpt3 = "SELECT * FROM border WHERE bordercontent LIKE ? ORDER BY BORDERID DESC";
+	private final String pagingList = "SELECT b.* FROM (select a.*, rownum rn from (select * from border order by 1 desc)a )b WHERE rn BETWEEN ? and ?";
 
 	// 전체 데이터 가져오기.
 	public ArrayList<BorderVO> selectAll() {
@@ -61,6 +62,51 @@ public class BorderDao extends DAO {
 		}
 
 		return list; // 돌아오는 데이터가 없으면 return에 null을 반환.
+	}
+
+	// 페이징
+	public ArrayList<BorderVO> getList(String pNum, Integer pageSize) {
+
+		int pageNum = Integer.parseInt(pNum);
+
+		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
+		try {
+			psmt = conn.prepareStatement(pagingList);
+			psmt.setInt(1, pageNum * pageSize - (pageSize - 1));
+			psmt.setInt(2, pageNum * pageSize);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				BorderVO vo = new BorderVO(); // borderVO값 초기화.
+				vo.setBorderId(rs.getInt("borderid"));
+				vo.setBorderWrite(rs.getString("borderwriter"));
+				vo.setBorderTitle(rs.getString("bordertitle"));
+				vo.setBorderContent(rs.getString("bordercontent"));
+				vo.setBorderDate(rs.getDate("borderdate"));
+				vo.setBorderHit(rs.getInt("borderhit"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return list;
+	}
+
+	// 글의 갯수를 가져오는 메서드
+	public int getAllCount() {
+		int cnt = 0;
+		try {
+			psmt = conn.prepareStatement("select count(*) as cnt from border");
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return cnt;
 	}
 
 	// 한 레코드 검색 -> if.
@@ -196,6 +242,8 @@ public class BorderDao extends DAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			close();
 		}
 
 		return list;

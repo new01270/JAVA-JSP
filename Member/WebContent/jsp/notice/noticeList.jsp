@@ -66,7 +66,7 @@ tr.row:hover {
 						<option value="noticecontent">내용</option>
 					</select>
 					<input type="text" size="30" id="condition" name="condition" placeholder="특수문자는 사용할수 없습니다.">&nbsp;
-					<input type="submit" value="검색">
+					<input type="submit" value="검색"><br><br><br><hr><br><br><br>
 				</form>
 			</div>
 		</div>

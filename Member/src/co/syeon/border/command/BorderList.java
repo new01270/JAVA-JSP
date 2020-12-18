@@ -18,9 +18,18 @@ public class BorderList implements BorderCommand {
 	@Override
 	public String action(HttpServletRequest request, HttpServletResponse response)
 			throws IOException, ServletException {
+
+		String pageNum = request.getParameter("pageNum");
+		
+		if (pageNum == null || pageNum.equals("")) {
+			pageNum = "1";
+		}
+		
+		Integer pageSize = (Integer)request.getAttribute("pageSize");
+		
 		// 리스트 기능
 		BorderDao dao = new BorderDao();
-		ArrayList<BorderVO> blist = dao.selectAll();
+		ArrayList<BorderVO> blist = dao.getList(pageNum, pageSize);// dao.selectAll();
 		request.setAttribute("list", blist);
 
 		return "jsp/border/borderList.jsp";
