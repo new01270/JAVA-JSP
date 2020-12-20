@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import co.syeon.border.command.Paging;
 import co.syeon.border.dao.BorderDao;
 import co.syeon.border.vo.BorderVO;
 
@@ -27,16 +28,21 @@ public class BorderKeywordController extends HttpServlet {
 
 		// 검색기능 list?opt=title,writer,date&condition=aaa;
 
+		BorderDao dao = new BorderDao();
+		Paging paging = new Paging();
+
 		String opt = request.getParameter("opt");
 		String condition = request.getParameter("condition");
-
+		
 		HashMap<String, Object> search = new HashMap<String, Object>();
 		search.put("opt", opt);
 		search.put("condition", condition);
 
-		BorderDao dao = new BorderDao();
-		ArrayList<BorderVO> slist = dao.getBoardList(search);
-		request.setAttribute("list", slist);
+		// totalCount
+
+		// pageNo		
+
+		// pageSize
 
 		String viewPage = "jsp/border/borderList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);

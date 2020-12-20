@@ -33,15 +33,144 @@ public class BorderDao extends DAO {
 	private final String hit_update = "UPDATE border SET borderhit = borderhit + 1 WHERE borderid = ?";
 	private final String update = "UPDATE border SET bordercontent=? WHERE borderid = ?";
 	private final String dalete = "DELETE FROM border WHERE borderid=?";
-	private final String searchOpt = "SELECT * FROM border WHERE bordertitle LIKE ? ORDER BY BORDERID DESC";
-	private final String searchOpt2 = "SELECT * FROM border WHERE borderwriter LIKE ? ORDER BY BORDERID DESC";
-	private final String searchOpt3 = "SELECT * FROM border WHERE bordercontent LIKE ? ORDER BY BORDERID DESC";
+	private final String pagingTitle = "SELECT * FROM( SELECT rownum rn, b.* FROM (SELECT * FROM border WHERE bordertitle LIKE ? ORDER BY BORDERID DESC)b ) WHERE rn BETWEEN ? and ?";
+	private final String pagingWriter = "SELECT * FROM( SELECT rownum rn, b.* FROM (SELECT * FROM border WHERE bordercwriter LIKE ? ORDER BY BORDERID DESC)b ) WHERE rn BETWEEN ? and ?";
+	private final String pagingContent = "SELECT * FROM( SELECT rownum rn, b.* FROM (SELECT * FROM border WHERE bordercontent LIKE ? ORDER BY BORDERID DESC)b ) WHERE rn BETWEEN ? and ?";
 	private final String pagingList = "SELECT b.* FROM (select a.*, rownum rn from (select * from border order by 1 desc)a )b WHERE rn BETWEEN ? and ?";
+	private final String pagingCount = "select count(*) as cnt from border";
+
+	// 검색기능
+	// select * from border where bordertitle like'%404%';
+	public ArrayList<BorderVO> getKeywordList(String pageNum, Integer pSize, String opt, String condition) {
+
+		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
+
+		int pNum = Integer.parseInt(pageNum);
+
+		try {
+			if (opt.equals("bordertitle")) {
+				psmt = conn.prepareStatement(pagingTitle);
+				psmt.setString(1, "%" + condition + "%");
+				psmt.setInt(2, pNum * pSize - (pSize - 1));
+				psmt.setInt(3, pNum * pSize);
+			} else if (opt.equals("borderwriter")) {
+				psmt = conn.prepareStatement(pagingWriter);
+				psmt.setString(1, "%" + condition + "%");
+				psmt.setInt(2, pNum * pSize - (pSize - 1));
+				psmt.setInt(3, pNum * pSize);
+			} else {
+				psmt = conn.prepareStatement(pagingContent);
+				psmt.setInt(2, pNum * pSize - (pSize - 1));
+				psmt.setInt(3, pNum * pSize);
+			}
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				BorderVO vo = new BorderVO(); // borderVO값 초기화.
+				vo.setBorderId(rs.getInt("borderid"));
+				vo.setBorderWrite(rs.getString("borderwriter"));
+				vo.setBorderTitle(rs.getString("bordertitle"));
+				vo.setBorderContent(rs.getString("bordercontent"));
+				vo.setBorderDate(rs.getDate("borderdate"));
+				vo.setBorderHit(rs.getInt("borderhit"));
+				list.add(vo);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return list;
+
+	}
+
+	// 리스트 개수만큼 페이지 가져오기.
+	public ArrayList<BorderVO> getList(String pageNum, Integer pSize) {
+
+		int pNum = Integer.parseInt(pageNum);
+
+		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
+
+		try {
+			psmt = conn.prepareStatement(pagingList);
+			psmt.setInt(1, pNum * pSize - (pSize - 1));
+			psmt.setInt(2, pNum * pSize);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				BorderVO vo = new BorderVO(); // borderVO값 초기화.
+				vo.setBorderId(rs.getInt("borderid"));
+				vo.setBorderWrite(rs.getString("borderwriter"));
+				vo.setBorderTitle(rs.getString("bordertitle"));
+				vo.setBorderContent(rs.getString("bordercontent"));
+				vo.setBorderDate(rs.getDate("borderdate"));
+				vo.setBorderHit(rs.getInt("borderhit"));
+				list.add(vo);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+
+	}
+
+	// 글의 갯수
+	public int getAllCount() {
+
+		int cnt = 0;
+		try {
+			psmt = conn.prepareStatement(pagingCount);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return cnt;
+
+	}
+
+	private final String keywordCount = "SELECT count(*) cnt FROM border WHERE bordertitle LIKE ?";
+	private final String keywordCount2 = "SELECT count(*) cnt FROM border WHERE borderwriter LIKE ?";
+	private final String keywordCount3 = "SELECT count(*) cnt FROM border WHERE bordercontent LIKE ?";
+
+	// 검색 후 글의 갯수
+	public int getKeywordCount(String opt, String condition) {
+
+		int cnt = 0;
+
+		try {
+			if (opt.equals("bordertitle")) {
+				psmt = conn.prepareStatement(keywordCount);
+				psmt.setString(1, "%" + condition + "%");
+			} else if (opt.equals("borderwriter")) {
+				psmt = conn.prepareStatement(keywordCount2);
+				psmt.setString(1, "%" + condition + "%");
+			} else {
+				psmt = conn.prepareStatement(keywordCount3);
+				psmt.setString(1, "%" + condition + "%");
+			}
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		System.out.println("검색후cnt : " + cnt);
+		return cnt;
+	}
 
 	// 전체 데이터 가져오기.
 	public ArrayList<BorderVO> selectAll() {
+
 		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
 		BorderVO vo;
+
 		try {
 			psmt = conn.prepareStatement(select_all);
 			rs = psmt.executeQuery();
@@ -62,60 +191,18 @@ public class BorderDao extends DAO {
 		}
 
 		return list; // 돌아오는 데이터가 없으면 return에 null을 반환.
-	}
 
-	// 페이징
-	public ArrayList<BorderVO> getList(String pNum, Integer pageSize) {
-
-		int pageNum = Integer.parseInt(pNum);
-
-		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
-		try {
-			psmt = conn.prepareStatement(pagingList);
-			psmt.setInt(1, pageNum * pageSize - (pageSize - 1));
-			psmt.setInt(2, pageNum * pageSize);
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				BorderVO vo = new BorderVO(); // borderVO값 초기화.
-				vo.setBorderId(rs.getInt("borderid"));
-				vo.setBorderWrite(rs.getString("borderwriter"));
-				vo.setBorderTitle(rs.getString("bordertitle"));
-				vo.setBorderContent(rs.getString("bordercontent"));
-				vo.setBorderDate(rs.getDate("borderdate"));
-				vo.setBorderHit(rs.getInt("borderhit"));
-				list.add(vo);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-		return list;
-	}
-
-	// 글의 갯수를 가져오는 메서드
-	public int getAllCount() {
-		int cnt = 0;
-		try {
-			psmt = conn.prepareStatement("select count(*) as cnt from border");
-			rs = psmt.executeQuery();
-			if (rs.next()) {
-				cnt = rs.getInt("cnt");
-			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return cnt;
 	}
 
 	// 한 레코드 검색 -> if.
 	public BorderVO selectOne(BorderVO vo) {
+
 		try {
 			psmt = conn.prepareStatement(select_one);
 			psmt.setInt(1, vo.getBorderId());
 			rs = psmt.executeQuery();
 			if (rs.next()) {
+
 				// 조회수 증가.
 				psmt = conn.prepareStatement(hit_update);
 				psmt.setInt(1, vo.getBorderId());
@@ -127,18 +214,23 @@ public class BorderDao extends DAO {
 				vo.setBorderContent(rs.getString("bordercontent"));
 				vo.setBorderDate(rs.getDate("borderdate"));
 				vo.setBorderHit(rs.getInt("borderhit"));
+
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
+
 		return vo;
+
 	}
 
 	// 게시글 입력
 	public int insert(BorderVO vo) {
+
 		int n = 0;
+
 		try {
 			psmt = conn.prepareStatement(insert);
 			psmt.setString(1, vo.getBorderWrite());
@@ -152,11 +244,14 @@ public class BorderDao extends DAO {
 		} finally {
 			close();
 		}
+
 		return n;
+
 	}
 
 	// 수정버튼->뿌려주는 data
 	public BorderVO selectSearch(BorderVO vo) {
+
 		try {
 			psmt = conn.prepareStatement(select_one);
 			psmt.setInt(1, vo.getBorderId());
@@ -174,11 +269,14 @@ public class BorderDao extends DAO {
 		} finally {
 			close();
 		}
+
 		return vo;
+
 	}
 
 	// 게시글 수정
 	public int update(BorderVO vo) {
+
 		int n = 0;
 		try {
 			psmt = conn.prepareStatement(update);
@@ -191,66 +289,33 @@ public class BorderDao extends DAO {
 		} finally {
 			close();
 		}
+
 		return n;
+
 	}
 
 	// 게시글 삭제
 	public int delete(BorderVO vo) {
+
 		int n = 0;
 		try {
 			psmt = conn.prepareStatement(dalete);
 			psmt.setInt(1, vo.getBorderId());
 			n = psmt.executeUpdate();
-			System.out.println(n + "한 건이 삭제 완료되었습니다.");
+			System.out.println(n + "건이 삭제 완료되었습니다.");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			close();
 		}
+
 		return n;
-	}
 
-	// 검색기능
-	// select * from border where bordertitle like'%404%';
-	public ArrayList<BorderVO> getBoardList(HashMap<String, Object> search) {
-		ArrayList<BorderVO> list = new ArrayList<BorderVO>();
-
-		String opt = (String) search.get("opt"); // 검색옵션(제목,작성자,작성일 등)
-		String condition = (String) search.get("condition"); // 검색내용
-
-		try {
-			if (opt.equals("bordertitle")) {
-				psmt = conn.prepareStatement(searchOpt);
-				psmt.setString(1, "%" + condition + "%");
-			} else if (opt.equals("borderwriter")) {
-				psmt = conn.prepareStatement(searchOpt2);
-				psmt.setString(1, "%" + condition + "%");
-			} else {
-				psmt = conn.prepareStatement(searchOpt3);
-				psmt.setString(1, "%" + condition + "%");
-			}
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				BorderVO vo = new BorderVO(); // borderVO값 초기화.
-				vo.setBorderId(rs.getInt("borderid"));
-				vo.setBorderWrite(rs.getString("borderwriter"));
-				vo.setBorderTitle(rs.getString("bordertitle"));
-				vo.setBorderContent(rs.getString("bordercontent"));
-				vo.setBorderDate(rs.getDate("borderdate"));
-				vo.setBorderHit(rs.getInt("borderhit"));
-				list.add(vo);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			close();
-		}
-
-		return list;
 	}
 
 	// close() 메서드 총괄.
 	private void close() {
+
 		try {
 			if (rs != null) {
 				rs.close();
@@ -265,4 +330,5 @@ public class BorderDao extends DAO {
 			e.printStackTrace();
 		}
 	}
+
 }

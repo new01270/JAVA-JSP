@@ -6,13 +6,13 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>noticeList.jsp</title>
-<style>
-tr.row:hover {
-	background: pink;
-}
-</style>
+	<meta charset="UTF-8">
+	<title>noticeList.jsp</title>
+	<style>
+		tr.row:hover {
+			background: pink;
+		}
+	</style>
 </head>
 
 <body>
@@ -34,8 +34,7 @@ tr.row:hover {
 					<th width="150" height="40">첨부파일</th>
 				</tr>
 				<c:forEach var="vo" items="${list}">
-					<tr class="row"
-						onclick="location.href='/Member/NoticeRead.do?id=${vo.noticeid}'">
+					<tr class="row" onclick="location.href='/Member/NoticeRead.do?id=${vo.noticeid}'">
 						<td height="30" align='center'>${vo.noticeid}</td>
 						<td height="30" align='center'>${vo.noticetitle}</td>
 						<td height="30" align='center'>${vo.noticedate}</td>
@@ -66,7 +65,8 @@ tr.row:hover {
 						<option value="noticecontent">내용</option>
 					</select>
 					<input type="text" size="30" id="condition" name="condition" placeholder="특수문자는 사용할수 없습니다.">&nbsp;
-					<input type="submit" value="검색"><br><br><br><hr><br><br><br>
+					<input type="submit" value="검색"><br><br><br>
+					<hr><br><br><br>
 				</form>
 			</div>
 		</div>
