@@ -11,27 +11,27 @@
 </head>
 
 <body>
-	<div align="center">
-		<h1>수정하기</h1>
+	<div align="center"><br>
+		<h2>수정하기</h2>
 	</div>
 	<div align="center">
 		<form action="/Member/MemberEdit.do" id="frm" name="frm" method="post">
 			<table border="1" style="border-collapse: collapse">
 				<tr>
-					<th width="100">아이디</th>
-					<td width="300">${vo.memberId }</td>
+					<th width="120" height="40">아이디</th>
+					<td width="400">&nbsp;${vo.memberId }</td>
 				</tr>
 				<tr>
-					<th width="100">이름</th>
-					<td width="300">${vo.memberName }</td>
+					<th width="120" height="40">이름</th>
+					<td width="400">&nbsp;${vo.memberName }</td>
 				</tr>
 				<tr>
-					<th width="100">권한</th>
-					<td width="300"><input type="text" size="50" id="auth" name="auth">${vo.memberAuth }</td>
+					<th width="120" height="40">권한</th>
+					<td width="400"><input type="text" size="50" id="auth" name="auth">&nbsp;${vo.memberAuth }</td>
 				</tr>
 				<tr>
-					<th width="100">포인트</th>
-					<td width="300"><input type="text" size="50" id="point" name="point">${vo.memberPoint }</td>
+					<th width="120" height="40">포인트</th>
+					<td width="400"><input type="text" size="50" id="point" name="point">&nbsp;${vo.memberPoint }</td>
 				</tr>
 			</table><br>
 			<input type="hidden" id="id" name="id" value="${vo.memberId }">

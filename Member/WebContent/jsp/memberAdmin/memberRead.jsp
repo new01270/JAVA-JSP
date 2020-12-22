@@ -47,6 +47,7 @@
 				<form id="frm" name="frm" action="/Member/MemberEditBefore.do" method="post">
 					<input type="hidden" id="id" name="id" value="${vo.memberId }">
 					<button type="button" onclick="formSubmit('edit')">수 정</button>&nbsp;&nbsp;&nbsp;
+					<!-- <form/> 안에 submit 기능을 하나만 넣을 수 있어서 formSubmit function을 만들어 submit 기능을 더해준다. -->
 					<button type="button" onclick="location.href='/Member/MemberList.do'">목 록</button>
 				</form>
 			</div>

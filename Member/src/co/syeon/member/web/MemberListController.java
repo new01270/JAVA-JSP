@@ -25,6 +25,7 @@ public class MemberListController extends HttpServlet {
 			throws ServletException, IOException {
 
 		request.setCharacterEncoding("utf-8");
+		
 		MemberDAO dao = new MemberDAO();
 		ArrayList<MemberVO> mlist = dao.selectAll();
 		request.setAttribute("list", mlist);
