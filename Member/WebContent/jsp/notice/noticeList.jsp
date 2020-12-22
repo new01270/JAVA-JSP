@@ -6,13 +6,13 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>noticeList.jsp</title>
-	<style>
-		tr.row:hover {
-			background: pink;
-		}
-	</style>
+<meta charset="UTF-8">
+<title>noticeList.jsp</title>
+<style>
+tr.row:hover {
+	background: pink;
+}
+</style>
 </head>
 
 <body>
@@ -34,7 +34,8 @@
 					<th width="150" height="40">첨부파일</th>
 				</tr>
 				<c:forEach var="vo" items="${list}">
-					<tr class="row" onclick="location.href='/Member/NoticeRead.do?id=${vo.noticeid}'">
+					<tr class="row"
+						onclick="location.href='/Member/NoticeRead.do?id=${vo.noticeid}'">
 						<td height="30" align='center'>${vo.noticeid}</td>
 						<td height="30" align='center'>${vo.noticetitle}</td>
 						<td height="30" align='center'>${vo.noticedate}</td>
@@ -54,21 +55,39 @@
 				<form action="#" id="frm" name="frm" method="POST">
 					<input type="hidden" id="no" name="no">
 					<c:if test="${auth eq 'admin'}">
-						<button type="button" onclick="location.href='jsp/notice/noticeForm.jsp'">글쓰기</button><br><br>
+						<button type="button"
+							onclick="location.href='jsp/notice/noticeForm.jsp'">글쓰기</button>
+						<br>
+						<br>
 					</c:if>
 				</form>
 			</div>
 			<div align="center">
-				<form id="frm" name="frm" action="NoticeKeyword.do" method="get">
+				<form id="frm" name="frm" action="NoticeList.do" method="get">
 					<select id="opt" name="opt">
-						<option value="noticetitle">제목</option>
-						<option value="noticecontent">내용</option>
-					</select>
-					<input type="text" size="30" id="condition" name="condition" placeholder="특수문자는 사용할수 없습니다.">&nbsp;
-					<input type="submit" value="검색"><br><br><br>
-					<hr><br><br><br>
+						<c:choose>
+							<c:when test="${opt eq 'noticetitle' }">
+								<option value="noticetitle" selected>제목</option>
+							</c:when>
+							<c:otherwise>
+								<option value="noticetitle">제목</option>
+							</c:otherwise>
+						</c:choose>
+						<c:choose>
+							<c:when test="${opt eq 'noticecontent' }">
+								<option value="noticecontent" selected>내용</option>
+							</c:when>
+							<c:otherwise>
+								<option value="noticecontent">내용</option>
+							</c:otherwise>
+						</c:choose>
+					</select> 
+					<input type="text" size="30" id="condition" name="condition" value="${condition}">&nbsp;
+					<input type="submit" value="검색"><br><br>
 				</form>
 			</div>
+			<jsp:include page="/jsp/page/noticePaging.jsp"></jsp:include><br><br>
+			<div>총게시글 : ${totalCount }</div> 
 		</div>
 	</div>
 </body>

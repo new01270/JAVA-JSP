@@ -6,14 +6,14 @@
 <html>
 
 <head>
-	<title>Bootstrap 4 Website Example</title>
-	<meta charset="utf-8">
-	<style>
-		tr.row:hover {
-			background: pink;
-		}
-	</style>
-	
+<title>Bootstrap 4 Website Example</title>
+<meta charset="utf-8">
+<style>
+tr.row:hover {
+	background: pink;
+}
+</style>
+
 </head>
 <body>
 	<div align="center">
@@ -29,7 +29,8 @@
 				<th width="100">조회수</th>
 			</tr>
 			<c:forEach var="vo" items="${list }">
-				<tr class="row" onclick="location.href='/Member/BorderRead.do?id=${vo.borderId}'">
+				<tr class="row"
+					onclick="location.href='/Member/BorderRead.do?id=${vo.borderId}'">
 					<td width="100" height="30" align="center">${vo.borderId }</td>
 					<td width="300" align="center">${vo.borderTitle }</td>
 					<td width="150" align="center">${vo.borderWrite }</td>
@@ -38,20 +39,44 @@
 				</tr>
 			</c:forEach>
 		</table>
-		<br />
-		<button type="button" onclick="location.href='jsp/border/borderInput.jsp'">글쓰기</button>
+		<br>
+		<button type="button"
+			onclick="location.href='jsp/border/borderInput.jsp'">글쓰기</button>
 		<br> <br>
 		<div align="center">
 			<form id="frm" name="frm" action="BorderList.do" method="get">
 				<select id="opt" name="opt">
-					<option value="bordertitle">제목</option>
-					<option value="borderwriter">작성자</option>
-					<option value=bordercontent>내용</option>
-				</select> <input type="text" size="30" id="condition" name="condition"
-					placeholder="특수문자는 사용할수 없습니다.">&nbsp; <input type="submit" value="검색"><br><br>
+					<c:choose>
+						<c:when test="${opt eq 'bordertitle' }">
+							<option value="bordertitle" selected>제목</option>
+						</c:when>
+						<c:otherwise>
+							<option value="bordertitle">제목</option>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${opt eq 'borderwriter' }">
+							<option value="borderwriter" selected>작성자</option>
+						</c:when>
+						<c:otherwise>
+							<option value="borderwriter">작성자</option>
+						</c:otherwise>
+					</c:choose>
+					<c:choose>
+						<c:when test="${opt eq 'bordercontent' }">
+							<option value="bordercontent" selected>내용</option>
+						</c:when>
+						<c:otherwise>
+							<option value="bordercontent">내용</option>
+						</c:otherwise>
+					</c:choose>
+				</select> 
+				<input type="text" size="30" id="condition" name="condition" value="${condition }" placeholder="${condition }">&nbsp;
+				<input type="submit" value="검색"><br><br>
 			</form>
-		</div>
-		<jsp:include page="/jsp/page/borderPaging.jsp"></jsp:include>
+		</div>		
+		<jsp:include page="/jsp/page/borderPaging.jsp"></jsp:include><br><br>
+		<div>총게시글 : ${totalCount }</div> 
 	</div>
 </body>
 

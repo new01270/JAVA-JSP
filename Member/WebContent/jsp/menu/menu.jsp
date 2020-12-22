@@ -33,7 +33,6 @@
 					<li><a href="/Member/MemberList.do">관리자권한</a>
 						<ul>
 							<li><a href="/Member/MemberList.do">멤버관리</a></li>
-							<li><a href="/Member/NoticeList.do">공지사항관리</a></li>
 						</ul></li>
 				</c:if>
 				<c:if test="${id ne null || auth ne null}">

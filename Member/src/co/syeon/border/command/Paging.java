@@ -18,7 +18,6 @@ public class Paging {
 
 	public void setPageSize(int pageSize) {
 		this.pageSize = pageSize;
-		this.makePaging();
 	}
 
 	public int getFirstPageNo() {
@@ -83,7 +82,7 @@ public class Paging {
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-		
+		this.makePaging();
 	}
 
 	// 페이징 생성
@@ -95,11 +94,11 @@ public class Paging {
 		if (this.pageNo == 0)
 			this.setPageNo(1);
 		System.out.println("pageNo : " + this.pageNo);
-		
+
 		if (this.pageSize == 0)
-			this.setPageSize(5);		
+			this.setPageSize(5);
 		System.out.println("pageSize : " + this.pageSize);
-	
+
 		int finalPage = (totalCount + (pageSize - 1)) / pageSize;
 		if (this.pageNo > finalPage)
 			this.setPageNo(finalPage); // 기본 값 설정
@@ -111,7 +110,7 @@ public class Paging {
 		boolean isNowFinal = pageNo == finalPage ? true : false; // 마지막 페이지 (전체)
 
 		int startPage = ((pageNo - 1) / 10) * 10 + 1; // 시작 페이지 (페이징 네비 기준)
-		
+
 		int endPage = startPage + 10 - 1; // 끝 페이지 (페이징 네비 기준)
 		System.out.println("endPage : " + endPage);
 		if (endPage > finalPage) { // [마지막 페이지 (페이징 네비 기준) > 마지막 페이지] 보다 큰 경우
@@ -137,6 +136,7 @@ public class Paging {
 
 		this.setFinalPageNo(finalPage); // 마지막 페이지 번호
 	}
+
 	@Override
 	public String toString() {
 		return "Paging [pageSize=" + pageSize + ", firstPageNo=" + firstPageNo + ", prevPageNo=" + prevPageNo

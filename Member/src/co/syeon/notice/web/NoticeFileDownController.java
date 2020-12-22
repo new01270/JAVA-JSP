@@ -22,8 +22,14 @@ public class NoticeFileDownController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
+		request.setCharacterEncoding("UTF-8");
+		response.setContentType("text/html;charset=UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		
+		
 		String fileName = request.getParameter("fileName");
-
+		
 		// 서버에 올라간 경로 가져옴
 		ServletContext context = getServletContext();
 		String uploadFilePath = context.getRealPath("uploadFile");
@@ -43,8 +49,8 @@ public class NoticeFileDownController extends HttpServlet {
 		response.setContentType(mimeType);
 
 		// 파일명 UTF-8로 인코딩(한글일 경우를 대비)
-		String sEncoding = new String(fileName.getBytes("UTF-8"));
-		response.setHeader("Content-Disposition", "attachment; fileName=" + sEncoding);
+		String sEncoding = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");	// 크롬에서 한글파일 인코딩: ISO-8859-1 추가
+		response.setHeader("Content-Disposition", "attachment; fileName=\"" + sEncoding);	// 크롬에서 349 오류해결  \" 추가
 
 		// 파일 쓰기 OutputStream
 		ServletOutputStream servletOutStream = response.getOutputStream();

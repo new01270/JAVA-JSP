@@ -50,8 +50,117 @@ public class NoticeDAO {
 	private final String hit_update = "UPDATE notice SET noticehit = noticehit + 1 WHERE noticeid = ?";
 	private final String update = "UPDATE notice SET noticecontent=?, noticeattach=? WHERE noticeid=?";
 	private final String delete = "DELETE FROM notice WHERE noticeid=?";
-	private final String searchOpt = "SELECT * FROM notice WHERE noticetitle LIKE ? ORDER BY noticeid DESC";
-	private final String searchOpt2 = "SELECT * FROM notice WHERE noticecontent LIKE ? ORDER BY noticeid DESC";
+	private final String pagingAllList = "SELECT b.* FROM (SELECT rownum rn, a.* FROM (SELECT * FROM notice ORDER BY noticeid DESC)a )b WHERE rn between ? and ?";
+	private final String keywordTitleList = "SELECT b.* FROM (SELECT rownum rn, a.* FROM (SELECT * FROM notice WHERE noticetitle LIKE ? ORDER BY noticeid DESC)a )b WHERE rn BETWEEN ? AND ?";
+	private final String keywordContentList = "SELECT * FROM (SELECT rownum rn, a.* FROM (SELECT * FROM notice WHERE noticecontent LIKE ? ORDER BY noticeid DESC)a )b WHERE rn BETWEEN ? AND ?";
+	private final String pagingAllcount = "SELECT count(*) cnt FROM notice";
+	private final String keywordTitleCount = "SELECT count(*) cnt FROM notice WHERE noticetitle LIKE ?";
+	private final String keywordContentCount = "SELECT count(*) cnt FROM notice WHERE noticecontent LIKE ?";
+
+	// 검색기능
+	// select * from border where bordertitle like'%404%';
+	public ArrayList<NoticeVO> getNoticeAllList(int currentPage, int pageSize) {
+
+		ArrayList<NoticeVO> list = new ArrayList<NoticeVO>();
+
+		try {
+			psmt = conn.prepareStatement(pagingAllList);
+			psmt.setInt(1, currentPage * pageSize - (pageSize - 1));
+			psmt.setInt(2, currentPage * pageSize);
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				NoticeVO vo = new NoticeVO();
+				vo.setNoticeid(rs.getInt("noticeid"));
+				vo.setNoticetitle(rs.getString("noticetitle"));
+				vo.setNoticedate(rs.getDate("noticedate"));
+				vo.setNoticewriter(rs.getString("noticewriter"));
+				vo.setNoticehit(rs.getInt("noticehit"));
+				vo.setNoticeattach(rs.getString("noticeattach"));
+				vo.setNoticecontent(rs.getString("noticecontent"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+
+	// 검색 후 리스트
+	public ArrayList<NoticeVO> getKeywordList(String condition, String opt, int currentPage, int pageSize) {
+
+		ArrayList<NoticeVO> list = new ArrayList<NoticeVO>();
+
+		try {
+			if (opt.equals("noticetitle")) {
+				psmt = conn.prepareStatement(keywordTitleList);
+				psmt.setString(1, "%" + condition + "%");
+				psmt.setInt(2, currentPage * pageSize - (pageSize - 1));
+				psmt.setInt(3, currentPage * pageSize);
+			} else {
+				psmt = conn.prepareStatement(keywordContentList);
+				psmt.setString(1, "%" + condition + "%");
+				psmt.setInt(2, currentPage * pageSize - (pageSize - 1));
+				psmt.setInt(3, currentPage * pageSize);
+			}
+			rs = psmt.executeQuery();
+			while (rs.next()) {
+				NoticeVO vo = new NoticeVO();
+				vo.setNoticeid(rs.getInt("noticeid"));
+				vo.setNoticewriter(rs.getString("noticewriter"));
+				vo.setNoticetitle(rs.getString("noticetitle"));
+				vo.setNoticecontent(rs.getString("noticecontent"));
+				vo.setNoticehit(rs.getInt("noticehit"));
+				vo.setNoticeattach(rs.getString("noticeattach"));
+				vo.setNoticedate(rs.getDate("noticedate"));
+				list.add(vo);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
+
+	// 모든 리스트 count
+	public int getAllCount() {
+
+		int cnt = 0;
+		try {
+			psmt = conn.prepareStatement(pagingAllcount);
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return cnt;
+
+	}
+
+	// 검색 후 튜플 수
+	public int getKeywordCount(String opt, String condition) {
+		int cnt = 0;
+		try {
+			if (opt.equals("noticetitle")) {
+				psmt = conn.prepareStatement(keywordTitleCount);
+				psmt.setString(1, "%" + condition + "%");
+			} else {
+				psmt = conn.prepareStatement(keywordContentCount);
+				psmt.setString(1, "%" + condition + "%");
+			}
+			rs = psmt.executeQuery();
+			if (rs.next()) {
+				cnt = rs.getInt("cnt");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("cnt" + cnt);
+		return cnt;
+	}
 
 	public ArrayList<NoticeVO> selectAll() {
 		ArrayList<NoticeVO> list = new ArrayList<>();
@@ -171,41 +280,6 @@ public class NoticeDAO {
 		}
 
 		return n;
-	}
-
-	// 검색기능
-	// select * from border where bordertitle like'%404%';
-	public ArrayList<NoticeVO> getBoardList(HashMap<String, Object> search) {
-		ArrayList<NoticeVO> list = new ArrayList<NoticeVO>();
-
-		String opt = (String) search.get("opt"); // 검색옵션(제목,작성자,작성일 등)
-		String condition = (String) search.get("condition"); // 검색내용
-
-		try {
-			if (opt.equals("noticetitle")) {
-				psmt = conn.prepareStatement(searchOpt);
-				psmt.setString(1, "%" + condition + "%");
-			} else {
-				psmt = conn.prepareStatement(searchOpt2);
-				psmt.setString(1, "%" + condition + "%");
-			}
-			rs = psmt.executeQuery();
-			while (rs.next()) {
-				NoticeVO vo = new NoticeVO();
-				vo.setNoticeid(rs.getInt("noticeid"));
-				vo.setNoticetitle(rs.getString("noticetitle"));
-				vo.setNoticedate(rs.getDate("noticedate"));
-				vo.setNoticewriter(rs.getString("noticewriter"));
-				vo.setNoticehit(rs.getInt("noticehit"));
-				vo.setNoticeattach(rs.getString("noticeattach"));
-				vo.setNoticecontent(rs.getString("noticecontent"));
-				list.add(vo);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-
-		return list;
 	}
 
 }

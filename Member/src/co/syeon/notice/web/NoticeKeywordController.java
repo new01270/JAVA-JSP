@@ -32,10 +32,7 @@ public class NoticeKeywordController extends HttpServlet {
 		search.put("opt", opt);
 		search.put("condition", condition);
 
-		NoticeDAO dao = new NoticeDAO();
-		ArrayList<NoticeVO> slist = dao.getBoardList(search);
-		request.setAttribute("list", slist);
-
+		
 		String viewPage = "jsp/notice/noticeList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

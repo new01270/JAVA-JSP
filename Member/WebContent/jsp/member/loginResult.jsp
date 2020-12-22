@@ -55,6 +55,7 @@
 		<br>
 		<c:if test="${auth ne null }">
 			<h3>${vo.memberName} 님 환영합니다.</h3>
+			
 			<!-- 공지사항 목록 -->
 			<div id="notice" class="notice" align="center"></div>
 		</c:if>

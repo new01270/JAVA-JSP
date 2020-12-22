@@ -30,20 +30,19 @@
 			<table border="1" style="border-collapse: collapse">
 				<tr>
 					<th width="150" height="30" align="center">작성자</th>
-					<td width="150">${vo.borderWrite}</td>
+					<td width="150">&nbsp;${vo.borderWrite}</td>
 					<th width="100" align="center">작성일자</th>
-					<td width="200">${vo.borderDate}</td>
+					<td width="200">&nbsp;${vo.borderDate}</td>
 					<th width="100" align="center">조회수</th>
-					<td width="100">${vo.borderHit}</td>
+					<td width="100">&nbsp;${vo.borderHit}</td>
 				</tr>
 				<tr>
 					<th width="100" height="30" align="center">제목</th>
-					<td colspan="5">${vo.borderTitle}</td>
+					<td colspan="5">&nbsp;${vo.borderTitle}</td>
 				</tr>
 				<tr>
-					<th width="100" align="center">내용</th>
-					<td colspan="5"><textarea cols="70" rows="7" style="border: none">${vo.borderContent}</textarea>
-					</td>
+					<th width="100" height="150" align="center">내용</th>
+					<td colspan="5">&nbsp;${vo.borderContent}</td>
 				</tr>
 			</table>
 			<br>
