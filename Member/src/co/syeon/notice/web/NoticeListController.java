@@ -46,6 +46,9 @@ public class NoticeListController extends HttpServlet {
 			paging.setTotalCount(dao.getKeywordCount(opt, condition));
 		}
 
+		// pageBlock
+		paging.setPageBlock(5);
+		
 		// pageNo
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum == null || pageNum.equals("")) {

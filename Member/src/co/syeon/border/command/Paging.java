@@ -11,6 +11,24 @@ public class Paging {
 	private int nextPageNo; // 다음 페이지 번호_BorderList.do
 	private int finalPageNo; // 마지막 페이지 번호
 	private int totalCount; // 게시 글 전체 수_BorderList.do <- DAO getAllCount();
+	private int pageBlock;	// 페이지 블록 수_BorderList.do
+	private int pageCount;	// 페이징 갯수
+
+	public int getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	public int getPageBlock() {
+		return pageBlock;
+	}
+
+	public void setPageBlock(int pageBlock) {
+		this.pageBlock = pageBlock;
+	}
 
 	public int getPageSize() {
 		return pageSize;
@@ -93,28 +111,30 @@ public class Paging {
 
 		if (this.pageNo == 0)
 			this.setPageNo(1);
-		System.out.println("pageNo : " + this.pageNo);
 
 		if (this.pageSize == 0)
 			this.setPageSize(5);
-		System.out.println("pageSize : " + this.pageSize);
+		
+		if (this.pageBlock == 0)
+			this.setPageBlock(7);
+		
+		int pageCount = totalCount / pageSize + (totalCount % pageSize == 0? 0 : 1);
+		this.setPageCount(pageCount);
 
 		int finalPage = (totalCount + (pageSize - 1)) / pageSize;
 		if (this.pageNo > finalPage)
 			this.setPageNo(finalPage); // 기본 값 설정
-		System.out.println("finalPage: " + finalPage);
 		if (this.pageNo < 0 || this.pageNo > finalPage)
 			this.pageNo = 1; // 현재 페이지 유효성 체크
 
 		boolean isNowFirst = pageNo == 1 ? true : false; // 시작 페이지 (전체)
 		boolean isNowFinal = pageNo == finalPage ? true : false; // 마지막 페이지 (전체)
 
-		int startPage = ((pageNo - 1) / 10) * 10 + 1; // 시작 페이지 (페이징 네비 기준)
+		int startPage = ((pageNo - 1) / pageBlock) * pageBlock + 1; // 시작 페이지 (페이징 네비 기준)
 
-		int endPage = startPage + 10 - 1; // 끝 페이지 (페이징 네비 기준)
-		System.out.println("endPage : " + endPage);
-		if (endPage > finalPage) { // [마지막 페이지 (페이징 네비 기준) > 마지막 페이지] 보다 큰 경우
-			endPage = finalPage;
+		int endPage = startPage + pageBlock - 1; // 끝 페이지 (페이징 네비 기준)
+		if (endPage > pageCount) { // [마지막 페이지 (페이징 네비 기준) > 마지막 페이지] 보다 큰 경우
+			endPage = pageCount;
 		}
 
 		this.setFirstPageNo(1); // 첫 번째 페이지 번호
@@ -127,7 +147,7 @@ public class Paging {
 
 		this.setStartPageNo(startPage); // 시작 페이지 (페이징 네비 기준)
 		this.setEndPageNo(endPage); // 끝 페이지 (페이징 네비 기준)
-
+		System.out.println("isNowFinal :" + isNowFinal);
 		if (isNowFinal) {
 			this.setNextPageNo(finalPage); // 다음 페이지 번호
 		} else {
@@ -141,7 +161,11 @@ public class Paging {
 	public String toString() {
 		return "Paging [pageSize=" + pageSize + ", firstPageNo=" + firstPageNo + ", prevPageNo=" + prevPageNo
 				+ ", startPageNo=" + startPageNo + ", pageNo=" + pageNo + ", endPageNo=" + endPageNo + ", nextPageNo="
-				+ nextPageNo + ", finalPageNo=" + finalPageNo + ", totalCount=" + totalCount + "]";
+				+ nextPageNo + ", finalPageNo=" + finalPageNo + ", totalCount=" + totalCount + ", pageBlock="
+				+ pageBlock + ", pageCount=" + pageCount + "]";
 	}
+
+	
+	
 
 }

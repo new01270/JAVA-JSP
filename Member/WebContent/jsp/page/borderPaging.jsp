@@ -52,7 +52,8 @@
 					</c:otherwise>
 				</c:choose>
 			</c:forEach>
-		</span> <a href="javascript:goPage(${params.nextPageNo})" class="next">></a>
+		</span> 
+		<a href="javascript:goPage(${params.nextPageNo})" class="next">></a>
 		<a href="javascript:goPage(${params.finalPageNo})" class="last">>></a>
 	</div>
 	<script>
