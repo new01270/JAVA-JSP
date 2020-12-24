@@ -39,16 +39,9 @@ public class NoticeListController extends HttpServlet {
 		request.setAttribute("pageSizeNo", paging.getPageSize()); // 위 setPageSize를 불러온다.
 		Integer pageSize = (Integer) request.getAttribute("pageSizeNo");
 
-		// totalCount
-		if (opt == null && condition == null) {
-			paging.setTotalCount(dao.getAllCount());
-		} else {
-			paging.setTotalCount(dao.getKeywordCount(opt, condition));
-		}
-
 		// pageBlock
 		paging.setPageBlock(5);
-		
+
 		// pageNo
 		String pageNum = request.getParameter("pageNum");
 		if (pageNum == null || pageNum.equals("")) {
@@ -65,6 +58,13 @@ public class NoticeListController extends HttpServlet {
 		int nextPage = currentPage == paging.getEndPageNo() ? currentPage : currentPage + 1;
 		paging.setNextPageNo(nextPage);
 
+		// totalCount
+		if (opt == null && condition == null) {
+			paging.setTotalCount(dao.getAllCount());
+		} else {
+			paging.setTotalCount(dao.getKeywordCount(opt, condition));
+		}
+
 		// 리스트 불러오기
 		if (opt == null && condition == null) {
 			ArrayList<NoticeVO> allList = dao.getNoticeAllList(currentPage, pageSize);
@@ -78,7 +78,7 @@ public class NoticeListController extends HttpServlet {
 		request.setAttribute("opt", opt);
 		request.setAttribute("condition", condition);
 		request.setAttribute("totalCount", paging.getTotalCount());
-		
+
 		String viewPage = "jsp/notice/noticeList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);

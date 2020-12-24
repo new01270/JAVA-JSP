@@ -43,17 +43,10 @@ public class BorderListController extends HttpServlet {
 		System.out.println(opt + condition);
 
 		// pageSize
-		paging.setPageSize(7);// 페이지에 파라미터로 넘겨보기
+		paging.setPageSize(5);// 페이지에 파라미터로 넘겨보기
 		request.setAttribute("pageSize", paging.getPageSize());
 		Integer pageSize = (Integer) request.getAttribute("pageSize");
 
-		// totalCount : DB의 튜플개수
-		if (opt == null && condition == null) {
-			paging.setTotalCount(dao.getAllCount());
-		} else {
-			paging.setTotalCount(dao.getKeywordCount(opt, condition));
-		}
-		
 		// pageNo
 		String currentPage = request.getParameter("pageNum");
 		if (currentPage == null || currentPage.equals("")) {
@@ -64,7 +57,7 @@ public class BorderListController extends HttpServlet {
 
 		// pageBlock
 		paging.setPageBlock(5);
-		
+
 		// prevPage
 		int pPage = cPage == 1 ? 1 : cPage - 1;
 		paging.setPrevPageNo(pPage);
@@ -72,6 +65,13 @@ public class BorderListController extends HttpServlet {
 		// nextPage
 		int nPage = cPage == paging.getEndPageNo() ? cPage : cPage + 1;
 		paging.setNextPageNo(nPage);
+
+		// totalCount : DB의 튜플개수
+		if (opt == null && condition == null) {
+			paging.setTotalCount(dao.getAllCount());
+		} else {
+			paging.setTotalCount(dao.getKeywordCount(opt, condition));
+		}
 
 		// 페이징 리스트
 		if (opt == null && condition == null) {
@@ -88,7 +88,7 @@ public class BorderListController extends HttpServlet {
 		request.setAttribute("totalCount", paging.getTotalCount());
 
 		System.out.println(paging);
-		
+
 		String viewPage = "jsp/border/borderList.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
