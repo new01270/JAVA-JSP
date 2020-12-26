@@ -162,7 +162,6 @@ public class BorderDao extends DAO {
 			e.printStackTrace();
 		}
 
-		System.out.println("검색후cnt : " + cnt);
 		return cnt;
 	}
 
