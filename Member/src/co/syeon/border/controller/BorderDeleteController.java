@@ -37,7 +37,6 @@ public class BorderDeleteController extends HttpServlet {
 			String msg = "삭제하지 못하였습니다.";
 			request.setAttribute("msg", msg);
 			String viewPage = "jsp/border/inputError.jsp";
-
 			RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 			dispatcher.forward(request, response);
 		}

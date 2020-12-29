@@ -42,6 +42,7 @@ public class LoginController extends HttpServlet {
 		}
 		
 		request.setAttribute("vo", vo);
+		
 		String viewPage = "jsp/member/loginResult.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(viewPage);
 		dispatcher.forward(request, response);
