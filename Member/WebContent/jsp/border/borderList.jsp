@@ -44,7 +44,7 @@ tr.row:hover {
 			onclick="location.href='jsp/border/borderInput.jsp'">글쓰기</button>
 		<br> <br>
 		<div align="center">
-			<form id="frm" name="frm" action="BorderList.do" method="get">
+			<form id="frm" name="frm" action="BorderList.do" method="post">
 				<select id="opt" name="opt">
 					<c:choose>
 						<c:when test="${opt eq 'bordertitle' }">
