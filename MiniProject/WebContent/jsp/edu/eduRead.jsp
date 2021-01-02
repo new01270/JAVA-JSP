@@ -6,23 +6,23 @@
 <jsp:include page="/jsp/menu/head.jsp" />
 
 <head>
-<meta charset="UTF-8">
-<title>eduRead.jsp</title>
-<style>
-video {
-	max-width: 50%;
-	display: block;
-	margin: 20px auto;
-}
-</style>
+	<meta charset="UTF-8">
+	<title>eduRead.jsp</title>
+	<style>
+		video {
+			max-width: 50%;
+			display: block;
+			margin: 20px auto;
+		}
+	</style>
 </head>
 
 <body>
 	<div align="center">
 		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
+			<p />
+			<p>&nbsp;
+				<p />
 
 	</div>
 	<section class="main-content  py-4 mb-5">
@@ -76,15 +76,14 @@ video {
 							<div class="card">
 								<div class="card-body">
 									<P style="font-size: 20px; font-weight: bold">${vo.eduPrice}</p>
-									<button type="button"
-										class="btn btn-sm btn-primary2 btn-create">수강하기</button>
+									<button type="button" class="btn btn-sm btn-primary2 btn-create">수강하기</button>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div align="center">
 						<p>&nbsp;
-						<p />
+							<p />
 					</div>
 				</div>
 			</div>
@@ -92,13 +91,13 @@ video {
 	</section>
 	<div align="center">
 		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
+			<p />
+			<p>&nbsp;
+				<p />
+				<p>&nbsp;
+					<p />
+					<p>&nbsp;
+						<p />
 	</div>
 </body>
 <jsp:include page="/jsp/menu/footer.jsp" />

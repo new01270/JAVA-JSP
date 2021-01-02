@@ -6,17 +6,18 @@
 <jsp:include page="/jsp/menu/head.jsp" />
 
 <head>
-<meta charset="UTF-8">
-<title>프로그래밍</title>
+	<meta charset="UTF-8">
+	<title>프로그래밍</title>
 </head>
 
 <body>
 	<div align="center">
 		<p>
-			&nbsp; <p />			
+			&nbsp;
+			<p />
 	</div>
-	<input type="hidden" id="programming" name="programming"
-				value="${vo.eduSubject}"><div class="banner_section layout_padding">
+	<input type="hidden" id="programming" name="programming" value="${vo.eduSubject}">
+	<div class="banner_section layout_padding">
 		<div class="fashion_section">
 			<div id="main_slider" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
@@ -56,17 +57,17 @@
 	</div>
 	<div align="center">
 		<p>&nbsp;
-			
-		<p />
+
+			<p />
 			<p>&nbsp;
-				
-		<p />
+
+				<p />
 				<p>&nbsp;
-					
-		<p />
+
+					<p />
 					<p>&nbsp;
-						
-		<p />
+
+						<p />
 	</div>
 </body>
 <jsp:include page="/jsp/menu/footer.jsp" />

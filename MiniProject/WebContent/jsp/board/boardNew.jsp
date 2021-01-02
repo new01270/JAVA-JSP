@@ -6,34 +6,34 @@
 <jsp:include page="/jsp/menu/head.jsp" />
 
 <head>
-<meta charset="UTF-8">
-<title>boardNew.jsp</title>
-<style>
-textarea, input {
-	border: solid 1px lightgray;
-	border-radius: 5px;
-}
+	<meta charset="UTF-8">
+	<title>boardNew.jsp</title>
+	<style>
+		textarea,
+		input {
+			border: solid 1px lightgray;
+			border-radius: 5px;
+		}
 
-p {
-	font-size: 30px
-}
+		p {
+			font-size: 30px
+		}
 
-p.textarea {
-	font-size: 15px
-}
-</style>
+		p.textarea {
+			font-size: 15px
+		}
+	</style>
 
 </head>
 
 <body>
 	<div align="center">
 		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
+			<p />
+			<p>&nbsp;
+				<p />
 	</div>
-	<form id="frm" name="frm" action="/MiniProject/BoardNew.do"
-		method="post">
+	<form id="frm" name="frm" action="/MiniProject/BoardNew.do" method="post">
 		<section class="main-content  py-4 mb-5">
 			<div class="container">
 				<div class="row">
@@ -75,8 +75,7 @@ p.textarea {
 								<div class="card">
 									<div class="card-body">
 										<P>DATE</p>
-										<input type="date" id="wdate" name="wdate"
-											style="border: none">
+										<input type="date" id="wdate" name="wdate" style="border: none">
 									</div>
 								</div>
 							</div>
@@ -96,20 +95,20 @@ p.textarea {
 	</form>
 	<div align="center">
 		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
+			<p />
+			<p>&nbsp;
+				<p />
+				<p>&nbsp;
+					<p />
+					<p>&nbsp;
+						<p />
 	</div>
 	<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 	<script>
 		var date = new Date();
 		var yyyy = date.getFullYear();
-		var mm = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : '0'
-				+ (date.getMonth() + 1);
+		var mm = date.getMonth() + 1 > 10 ? date.getMonth() + 1 : '0' +
+			(date.getMonth() + 1);
 		var dd = date.getDate() > 10 ? date.getDate() : '0' + date.getDate();
 
 		$("input[type=date]").val(yyyy + "-" + mm + "-" + dd);

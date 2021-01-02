@@ -6,17 +6,18 @@
 <jsp:include page="/jsp/menu/head.jsp" />
 
 <head>
-<meta charset="UTF-8">
-<title>넷</title>
+	<meta charset="UTF-8">
+	<title>넷</title>
 </head>
 
 <body>
 	<div align="center">
 		<p>
-			&nbsp; <p />			
+			&nbsp;
+			<p />
 	</div>
-	<input type="hidden" id="network" name="network"
-				value="${vo.eduSubject}"><di v class="banner_section layout_padding">
+	<input type="hidden" id="network" name="network" value="${vo.eduSubject}">
+	<di v class="banner_section layout_padding">
 		<div class="fashion_section">
 			<div id="main_slider" class="carousel slide" data-ride="carousel">
 				<div class="carousel-inner">
@@ -53,7 +54,7 @@
 				</div>
 			</div>
 		</div>
-	</div>
+		</div>
 </body>
 <jsp:include page="/jsp/menu/footer.jsp" />
 

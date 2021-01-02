@@ -5,48 +5,47 @@
 <!DOCTYPE html>
 <html>
 <jsp:include page="../menu/head.jsp" />
+
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link rel="dns-prefetch" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600"
-	rel="stylesheet" type="text/css">
-<link rel="stylesheet" href="css/style.css">
-<link rel="icon" href="Favicon.png">
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-<script
-	src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
-<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<link
-	href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css"
-	rel="stylesheet" id="bootstrap-css">
-<style>
-div.padding {
-	padding-left: 5%;
-}
-div.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control {
-    position: relative;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    width: 90%;
-    margin-bottom: 0;
-}
-</style>
-<title>Insert title here</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+	<link rel="stylesheet" href="css/style.css">
+	<link rel="icon" href="Favicon.png">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+	<style>
+		div.padding {
+			padding-left: 5%;
+		}
+
+		div.input-group>.custom-file,
+		.input-group>.custom-select,
+		.input-group>.form-control {
+			position: relative;
+			-ms-flex: 1 1 auto;
+			flex: 1 1 auto;
+			width: 90%;
+			margin-bottom: 0;
+		}
+	</style>
+	<title>Insert title here</title>
 </head>
+
 <body>
 	<div align="left" class="padding">
 		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
-		<h1 style="font-size: 30px; font-weight: bold">MyPage</h1>
-		<p>&nbsp;
-		<p />
-		<p>&nbsp;
-		<p />
+			<p />
+			<p>&nbsp;
+				<p />
+				<h1 style="font-size: 30px; font-weight: bold">MyPage</h1>
+				<p>&nbsp;
+					<p />
+					<p>&nbsp;
+						<p />
 	</div>
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1" align="left">
@@ -65,8 +64,7 @@ div.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-co
 							<div class="fuck">
 								<div class="card" style="width: 18rem; height: 25rem"
 									onclick="location.href='/MiniProject/EduRead.do?id=${vo.eduNumber}'">
-									<img class="card-img-top" src="images/${vo.eduImg}"
-										alt="Card image cap">
+									<img class="card-img-top" src="images/${vo.eduImg}" alt="Card image cap">
 									<div class="card-body">
 										<h5 class="card-title" style="height: 60px">${vo.eduTitle }</h5>
 										<h5 class="card-text">${vo.eduLecturer }</h5>
@@ -86,4 +84,5 @@ div.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-co
 	</div>
 </body>
 <jsp:include page="../menu/footer.jsp" />
+
 </html>

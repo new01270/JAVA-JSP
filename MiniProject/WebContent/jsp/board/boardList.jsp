@@ -17,39 +17,39 @@
 	rel="stylesheet" id="bootstrap-css">
 </head>
 <style>
-div.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control {
-    position: relative;
-    -ms-flex: 1 1 auto;
-    flex: 1 1 auto;
-    width: 90%;
-    margin-bottom: 0;
+div.input-group>.custom-file, .input-group>.custom-select, .input-group>.form-control
+	{
+	position: relative;
+	-ms-flex: 1 1 auto;
+	flex: 1 1 auto;
+	width: 90%;
+	margin-bottom: 0;
 }
-div.padding{
-padding-left: 5%;
+
+div.padding {
+	padding-left: 5%;
 }
+
 .select, .search, .submit {
 	border-radius: 5px
 }
 
 .table tbody tr:hover td, .table tbody tr:hover th {
-    background-color: #eeeeea;
+	background-color: #eeeeea;
 }
-
 </style>
 <body>
-	<div class="padding">
-		<div align="left">
-			<p>&nbsp;
-			<p />
-			<p>&nbsp;
-			<p />
-			<h1 style="font-size: 30px; font-weight: bold">
-				<span style="color: red; font-size: 30px;">?</span>QnA<span style="color: red; font-size: 30px;">!</span>
-			</h1>
-			<p>&nbsp;
-			<p />
-		</div>
+	<div align="center">
+		<p>&nbsp;
+		<p />
+		<p>&nbsp;
+		<p />
+		<h1 style="font-size: 30px; font-weight: bold">
+			QnA<span style="color: red; font-size: 30px;">?</span>
+		</h1>
+
 	</div>
+
 	<div class="row">
 		<div class="col-md-10 col-md-offset-1">
 			<form id="frm" name="frm" action="BoardList.do" method="post">
@@ -107,28 +107,26 @@ padding-left: 5%;
 							<tbody>
 								<tr class="rows">
 									<td
-										onclick="location.href='/MiniProject/BoardRead.do?id=${vo.boardnumber}'">
+										onclick="location.href='/MiniProject/BoardRead.do?no=${vo.boardnumber}'">
 										${vo.boardnumber}</td>
 									<td
-										onclick="location.href='/MiniProject/BoardRead.do?id=${vo.boardnumber}'">
+										onclick="location.href='/MiniProject/BoardRead.do?no=${vo.boardnumber}'">
 										${vo.boardtitle}</td>
 									<td
-										onclick="location.href='/MiniProject/BoardRead.do?id=${vo.boardnumber}'">
+										onclick="location.href='/MiniProject/BoardRead.do?no=${vo.boardnumber}'">
 										${vo.memberid}</td>
 									<td
-										onclick="location.href='/MiniProject/BoardRead.do?id=${vo.boardnumber}'">
+										onclick="location.href='/MiniProject/BoardRead.do?no=${vo.boardnumber}'">
 										${vo.boarddate }</td>
 									<td
-										onclick="location.href='/MiniProject/BoardRead.do?id=${vo.boardnumber}'">
+										onclick="location.href='/MiniProject/BoardRead.do?no=${vo.boardnumber}'">
 										${vo.boardhit }</td>
-									<td align="center"><c:if
-											test="${vo.memberid eq session_id }">
-											<a class="btn btn-default"
-												onclick="location.href='#'">
-												<em class="fa fa-pencil"></em>
+									<td align="center"><c:if test="${vo.memberid eq session_id }">
+											<a class="btn btn-default" onclick="location.href='#'"> <em
+												class="fa fa-pencil"></em>
 											</a>
 											<a class="btn btn-danger"
-												onclick="location.href='/MiniProject/BoardDelete.do?id=${vo.boardnumber}'"><em
+												onclick="location.href='/MiniProject/BoardDelete.do?no=${vo.boardnumber}'"><em
 												class="fa fa-trash"></em></a>
 										</c:if></td>
 								</tr>

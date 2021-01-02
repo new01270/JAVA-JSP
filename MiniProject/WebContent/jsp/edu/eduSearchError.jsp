@@ -6,23 +6,22 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
 
 <body>
 	<div align="center">
 		<p>&nbsp;
-		<p />
+			<p />
 	</div>
 	<div align="center">
-		<h1 align="center" class="fashion_taital">${msg }<span
-				style="color: red; font-size: 15px;">again!</span>
+		<h1 align="center" class="fashion_taital">${msg }<span style="color: red; font-size: 15px;">again!</span>
 		</h1>
 	</div>
 	<div align="center">
 		<p>&nbsp;
-		<p />
+			<p />
 	</div>
 
 </body>

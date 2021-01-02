@@ -15,6 +15,16 @@ public class EduDAO extends DAO {
 	private final String subject_pro = "select * from edu where edusubject=?";
 	private final String edu_new = "SELECT * FROM ( SELECT * FROM edu ORDER BY edunumber DESC ) WHERE ROWNUM <= 4";
 	private final String edu_hit = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE ROWNUM <= 4";
+	private final String edu_programming = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='programming' AND ROWNUM <= 4";
+	private final String edu_network = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='network' AND ROWNUM <= 4";
+	private final String edu_database = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='database' AND ROWNUM <= 4";
+	private final String edu_skill = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='skill' AND ROWNUM <= 4";
+	private final String edu_career = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='career' AND ROWNUM <= 4";
+	private final String edu_life = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='life' AND ROWNUM <= 4";
+	private final String edu_search = "SELECT * FROM edu WHERE eduKeyword LIKE ? OR edutitle LIKE ? OR eduskill LIKE ?";
+	private final String hit_update = "update edu set eduhit = eduhit +1 where edunumber=?";
+	private final String selectDescOne = "select * from where edunumber=?";
+	private final String selectOne = "select * from edu where edunumber=?";
 
 	public ArrayList<EduVO> programmingList(EduVO vo) {
 		ArrayList<EduVO> list = new ArrayList<EduVO>();
@@ -88,13 +98,6 @@ public class EduDAO extends DAO {
 		return list;
 
 	}
-
-	private final String edu_programming = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='programming' AND ROWNUM <= 4";
-	private final String edu_network = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='network' AND ROWNUM <= 4";
-	private final String edu_database = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='database' AND ROWNUM <= 4";
-	private final String edu_skill = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='skill' AND ROWNUM <= 4";
-	private final String edu_career = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='career' AND ROWNUM <= 4";
-	private final String edu_life = "SELECT * FROM ( SELECT * FROM edu ORDER BY eduhit DESC ) WHERE edusubject='life' AND ROWNUM <= 4";
 
 	public ArrayList<EduVO> getEduList(EduVO vo) {
 		ArrayList<EduVO> list = new ArrayList<EduVO>();
@@ -214,8 +217,6 @@ public class EduDAO extends DAO {
 		return list;
 	}
 
-	private final String edu_search = "SELECT * FROM edu WHERE eduKeyword LIKE ? OR edutitle LIKE ? OR eduskill LIKE ?";
-
 	public ArrayList<EduVO> searchList(String parameter) {
 
 		System.out.println(parameter);
@@ -247,9 +248,6 @@ public class EduDAO extends DAO {
 		return list;
 	}
 
-	private final String hit_update = "update edu set eduhit = eduhit +1 where edunumber=?";
-	private final String selectDescOne = "select * from where edunumber=?";
-
 	public EduVO selectDescOne(EduVO vo) {
 		try {
 			psmt = conn.prepareStatement(selectDescOne);
@@ -276,8 +274,6 @@ public class EduDAO extends DAO {
 		}
 		return vo;
 	}
-
-	private final String selectOne = "select * from edu where edunumber=?";
 
 	public EduVO selectOne(EduVO vo) {
 

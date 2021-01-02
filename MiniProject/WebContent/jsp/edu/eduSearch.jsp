@@ -6,14 +6,14 @@
 <html>
 
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+	<meta charset="UTF-8">
+	<title>Insert title here</title>
 </head>
 
 <body>
 	<div align="center">
 		<p>&nbsp;
-		<p />
+			<p />
 	</div>
 	<div class="banner_section layout_padding">
 		<div class="fashion_section">

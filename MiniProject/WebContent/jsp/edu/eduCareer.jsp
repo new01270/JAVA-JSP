@@ -11,9 +11,9 @@
 </head>
 
 <body>
-<div align="center">
+	<div align="center">
 		<p>&nbsp;
-			<p />			
+			<p />
 	</div>
 	<input type="hidden" id="career" name="career" value="${vo.eduSubject}">
 
